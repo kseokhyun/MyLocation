@@ -1,5 +1,4 @@
 package com.professionalandroid.apps.mylocation;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -86,11 +85,11 @@ public class MainActivity extends AppCompatActivity {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0])
                         || ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[1])) {
 
-                    Toast.makeText(MainActivity.this, "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
                     finish();
 
                 }else {
-                    Toast.makeText(MainActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -108,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, REQUIRED_PERMISSIONS[0])) {
-                Toast.makeText(MainActivity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "No autuority", Toast.LENGTH_LONG).show();
                 ActivityCompat.requestPermissions(MainActivity.this, REQUIRED_PERMISSIONS,
                         PERMISSIONS_REQUEST_CODE);
 
@@ -131,17 +130,16 @@ public class MainActivity extends AppCompatActivity {
                     longitude,
                     7);
         } catch (IOException ioException) {
-            //네트워크 문제
-            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
-            return "지오코더 서비스 사용불가";
+            Toast.makeText(this, "Network Error", Toast.LENGTH_LONG).show();
+            return "Network Error";
         } catch (IllegalArgumentException illegalArgumentException) {
-            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
-            return "잘못된 GPS 좌표";
+            Toast.makeText(this, "Wrong GPS info.", Toast.LENGTH_LONG).show();
+            return "Wrong GPS info.";
         }
 
         if (addresses == null || addresses.size() == 0) {
-            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
-            return "주소 미발견";
+            Toast.makeText(this, "Address not found", Toast.LENGTH_LONG).show();
+            return "Address not found";
         }
 
         Address address = addresses.get(0);
@@ -152,9 +150,9 @@ public class MainActivity extends AppCompatActivity {
     private void showDialogForLocationServiceSetting() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("위치 서비스 비활성화");
-        builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
-                + "위치 설정을 수정하실래요?");
+        builder.setTitle("Service not activated");
+        builder.setMessage("You need location service\n"
+                + "Change your setting");
         builder.setCancelable(true);
         builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
             @Override
